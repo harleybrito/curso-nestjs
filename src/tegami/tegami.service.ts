@@ -1,10 +1,7 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
+import { CreateTegamiDto } from './dto/create-tegami.dto';
+import { UpdateTegamiDto } from './dto/update-tegami.dto';
 import { Tegami } from './entity/tegami.entity';
 
 @Injectable()
@@ -31,17 +28,19 @@ export class TegamiService {
     throw new NotFoundException('Tegami not found');
   }
 
-  create(body: any): Tegami {
+  create(body: CreateTegamiDto): Tegami {
     this.lastId++;
     const newTegami: Tegami = {
       id: this.lastId,
+      readen: false,
+      date: new Date(),
       ...body,
     };
     this.tegamis.push(newTegami);
     return newTegami;
   }
 
-  update(id: number, body: any): Tegami {
+  update(id: number, body: UpdateTegamiDto): Tegami {
     const index = this.tegamis.findIndex((tegami) => tegami.id === id);
     if (index >= 0) {
       const oldTegami = this.tegamis[index];

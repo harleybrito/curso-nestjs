@@ -8,6 +8,8 @@ import {
   Post,
 } from '@nestjs/common';
 
+import { CreateTegamiDto } from './dto/create-tegami.dto';
+import { UpdateTegamiDto } from './dto/update-tegami.dto';
 import { TegamiService } from './tegami.service';
 
 @Controller('tegami')
@@ -25,12 +27,12 @@ export class TegamiController {
   }
 
   @Post()
-  create(@Body() body: any) {
+  create(@Body() body: CreateTegamiDto) {
     return this.tegamiService.create(body);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() body: any) {
+  update(@Param('id') id: string, @Body() body: UpdateTegamiDto) {
     return this.tegamiService.update(+id, body);
   }
 
